@@ -1,5 +1,6 @@
+package model;
 
-package org.example.project.model;
+import java.util.function.Consumer;
 
 public class FibonacciCalculator {
     public long recursive(int n) {
@@ -7,17 +8,17 @@ public class FibonacciCalculator {
         return recursive(n - 1) + recursive(n - 2);
     }
 
-    public long recursiveWithTrace(int n) {
-        StringBuilder trace = new StringBuilder();
-        long result = traceRecursive(n, trace);
-        System.out.println(trace);
-        return result;
+    public FibNode buildRecursiveTree(int n) {
+        FibNode node = new FibNode(n);
+        if (n <= 1) return node;
+        node.left = buildRecursiveTree(n - 1);
+        node.right = buildRecursiveTree(n - 2);
+        return node;
     }
-
-    private long traceRecursive(int n, StringBuilder trace) {
-        trace.append("F(").append(n).append(") called\n");
+    private long traceRecursiveAnimated(int n, Consumer<String> traceConsumer) {
+        traceConsumer.accept("F(" + n + ") called\n");
         if (n <= 1) return n;
-        return traceRecursive(n - 1, trace) + traceRecursive(n - 2, trace);
+        return traceRecursiveAnimated(n - 1, traceConsumer) + traceRecursiveAnimated(n - 2, traceConsumer);
     }
 
     public long memoized(int n) {
