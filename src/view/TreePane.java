@@ -9,7 +9,7 @@ import javafx.scene.transform.Scale;
 public class TreePane extends Pane {
     private static final double BASE_H_GAP = 80;
     private static final double V_GAP = 70;
-    private static final double NODE_RADIUS = 20;
+    private static final double NODE_RADIUS = 25;
     private static final double MIN_H_GAP = 30;
 
     private double treeWidth = 800;
@@ -24,12 +24,14 @@ public class TreePane extends Pane {
     }
 
     public void drawTree(FibNode root) {
-        getChildren().clear();
+        clearTree();
         if (root == null) return;
 
         calculateTreeDimensions(root, 0);
-        double initialHGap = BASE_H_GAP * Math.pow(1.8, maxDepth-1);
-        drawNode(root, treeWidth/2, 50, initialHGap);
+        double initialHGap = BASE_H_GAP * Math.pow(1.8, maxDepth - 1);
+        double centerX = getWidth() / 2; // Center of the pane
+        double rootX = Math.max(centerX, treeWidth / 2); // Ensure the tree is centered
+        drawNode(root, rootX, 50, initialHGap);
 
         setPrefSize(treeWidth, treeHeight);
         resetZoom();
@@ -75,6 +77,9 @@ public class TreePane extends Pane {
         getChildren().add(view);
         node.view = view;
 
+        // Update the node view with the result
+        view.updateWithResult(node.result);
+
         double childHGap = Math.max(hGap / 1.8, MIN_H_GAP);
         double childY = y + V_GAP;
 
@@ -97,5 +102,12 @@ public class TreePane extends Pane {
         line.setStrokeWidth(1.2);
         line.getStrokeDashArray().addAll(4d, 4d);
         getChildren().add(line);
+    }
+
+    private void clearTree() {
+        getChildren().clear();
+        maxDepth = 0;
+        treeWidth = 800;
+        treeHeight = 600;
     }
 }

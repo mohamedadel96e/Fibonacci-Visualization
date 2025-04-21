@@ -2,11 +2,13 @@ package view;
 
 import controller.FibonacciController;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class MainView {
     private final BorderPane root;
@@ -14,15 +16,20 @@ public class MainView {
     private final TextArea resultArea;
     private final LineChart<Number, Number> chart;
     private final TreePane treePane;
-    private final TabPane tabPane;
+    private final MemoizationPane memoPane;
+    private final TabulationPane tabPane;
+    private final TabPane visualizationTabPane;
 
     public MainView() {
         // Input Section
         inputField = new TextField();
         inputField.setPromptText("Enter Fibonacci number (n)");
-        inputField.setMaxWidth(200);
+        inputField.setMaxWidth(450);
+        inputField.setMinWidth(200);
+        inputField.setMinHeight(40);
+        inputField.setId("inputField");
 
-        Label titleLabel = new Label("Fibonacci Calculator");
+        Label titleLabel = new Label("Fibonacci Calculator & Algorithm Visualizer");
         titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
         HBox headerBox = new HBox(20, titleLabel, inputField);
@@ -34,8 +41,9 @@ public class MainView {
         Button recursiveBtn = createStyledButton("Recursive Tree", "#e74c3c");
         Button memoBtn = createStyledButton("Memoization", "#2ecc71");
         Button tabBtn = createStyledButton("Tabulation", "#9b59b6");
+        Button compareBtn = createStyledButton("Compare All", "#f39c12");
 
-        HBox buttons = new HBox(15, recursiveBtn, memoBtn, tabBtn);
+        HBox buttons = new HBox(15, recursiveBtn, memoBtn, tabBtn, compareBtn);
         buttons.setAlignment(Pos.CENTER);
         buttons.setPadding(new Insets(15));
 
@@ -43,8 +51,9 @@ public class MainView {
         resultArea = new TextArea();
         resultArea.setEditable(false);
         resultArea.setWrapText(true);
-        resultArea.setPrefHeight(100);
-        resultArea.setStyle("-fx-font-family: monospace; -fx-font-size: 14px;");
+        resultArea.setPrefHeight(350);
+        resultArea.setStyle("-fx-font-family: 'Fira Code', monospace; -fx-font-size: 14px;");
+        resultArea.setMinHeight(100);
 
         // Chart
         NumberAxis xAxis = new NumberAxis();
@@ -55,13 +64,13 @@ public class MainView {
         chart.setTitle("Fibonacci Sequence Growth");
         chart.setAnimated(false);
         chart.setCreateSymbols(true);
-        chart.setLegendVisible(false);
+        chart.setLegendVisible(true);
         chart.setStyle("-fx-font-size: 14px;");
 
         // Tree Visualization
         treePane = new TreePane();
 
-        // Create zoom controls
+        // Create zoom controls for tree pane
         Button zoomInBtn = createZoomButton("+");
         Button zoomOutBtn = createZoomButton("-");
         Button resetZoomBtn = createZoomButton("⟲");
@@ -75,77 +84,78 @@ public class MainView {
         zoomControls.setPadding(new Insets(5));
 
         // Create scroll pane with tree and zoom controls
-        ScrollPane scrollPane = new ScrollPane(treePane);
-        scrollPane.setFitToWidth(false);
-        scrollPane.setFitToHeight(false);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        ScrollPane treeScrollPane = new ScrollPane(treePane);
+        treeScrollPane.setFitToWidth(false);
+        treeScrollPane.setFitToHeight(false);
+        treeScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        treeScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 
-        VBox treeContainer = new VBox(zoomControls, scrollPane);
-        treeContainer.setPadding(new Insets(5));
 
-        // Add to tab pane
+// Create VBox for tree tab with zoom controls and scroll pane
+        VBox treeContainer = new VBox(5, zoomControls, treeScrollPane);
+        treeContainer.setAlignment(Pos.CENTER);
+        VBox.setVgrow(treeScrollPane, Priority.ALWAYS);
+
+        // Memoization visualization
+        memoPane = new MemoizationPane();
+        ScrollPane memoScrollPane = new ScrollPane(memoPane);
+        memoScrollPane.setFitToWidth(true);
+        memoScrollPane.setFitToHeight(true);
+
+        // Tabulation visualization
+        tabPane = new TabulationPane();
+        ScrollPane tabScrollPane = new ScrollPane(tabPane);
+        tabScrollPane.setFitToWidth(true);
+        tabScrollPane.setFitToHeight(true);
+
+        // Create tabs
+        visualizationTabPane = new TabPane();
         Tab treeTab = new Tab("Recursive Tree", treeContainer);
-
-
-        // TabPane for different visualizations
+        Tab memoTab = new Tab("Memoization", memoScrollPane);
+        Tab tabulationTab = new Tab("Tabulation", tabScrollPane);
         Tab chartTab = new Tab("Growth Chart", chart);
-        tabPane = new TabPane();
-        tabPane.getTabs().addAll(
-                new Tab("Growth Chart", chart),
-                treeTab
-        );
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        VBox visualizationContainer = new VBox(tabPane);
-        visualizationContainer.setPadding(new Insets(10));
-        visualizationContainer.setStyle("-fx-background-color: #ffffff; -fx-border-radius: 5; -fx-background-radius: 5;");
+        visualizationTabPane.getTabs().addAll(treeTab, memoTab, tabulationTab, chartTab);
+        visualizationTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        // Status Bar
-        Label statusLabel = new Label("Ready");
-        statusLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #7f8c8d;");
-        HBox statusBar = new HBox(statusLabel);
-        statusBar.setPadding(new Insets(5, 10, 5, 10));
-        statusBar.setStyle("-fx-background-color: #ecf0f1;");
+        // Split pane for results and visualization
+        SplitPane splitPane = new SplitPane();
+        splitPane.setOrientation(Orientation.VERTICAL);
+        splitPane.getItems().addAll(resultArea, visualizationTabPane);
+        splitPane.setDividerPositions(0.3);
+        VBox.setVgrow(splitPane, Priority.ALWAYS);
 
-        // Main Layout
-        VBox contentBox = new VBox(10, headerBox, buttons, resultArea, visualizationContainer);
-        contentBox.setPadding(new Insets(10));
-        contentBox.setStyle("-fx-background-color: #f5f7fa;");
-
+        // Create border pane
         root = new BorderPane();
-        root.setCenter(contentBox);
-        root.setBottom(statusBar);
+        root.setTop(new VBox(headerBox, buttons));
+        root.setCenter(splitPane);
+        root.setStyle("-fx-background-color: #f9f9f9;");
 
-        // Controller
-        FibonacciController controller = new FibonacciController(inputField, resultArea, chart, treePane, statusLabel);
-        recursiveBtn.setOnAction(controller::handleRecursiveTree);
-        memoBtn.setOnAction(controller::handleMemoized);
-        tabBtn.setOnAction(controller::handleTabulated);
+        // Create controller and wire up events
+        FibonacciController controller = new FibonacciController(
+                inputField, resultArea, chart, treePane, memoPane, tabPane, visualizationTabPane);
 
-
-
+        recursiveBtn.setOnAction(controller::handleRecursiveAction);
+        memoBtn.setOnAction(controller::handleMemoAction);
+        tabBtn.setOnAction(controller::handleTabulationAction);
+        compareBtn.setOnAction(controller::handleCompareAction);
     }
 
     private Button createStyledButton(String text, String color) {
-        Button btn = new Button(text);
-        btn.setStyle("-fx-background-color: " + color + "; -fx-text-fill: white; -fx-font-weight: bold; " +
-                "-fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;");
-        btn.setOnMouseEntered(e -> btn.setStyle("-fx-background-color: derive(" + color + ", -20%); -fx-text-fill: white; " +
-                "-fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
-        btn.setOnMouseExited(e -> btn.setStyle("-fx-background-color: " + color + "; -fx-text-fill: white; " +
-                "-fx-font-weight: bold; -fx-padding: 8 15; -fx-background-radius: 5; -fx-cursor: hand;"));
-        return btn;
+        Button button = new Button(text);
+        button.setStyle("-fx-background-color: " + color + "; -fx-text-fill: white; -fx-font-weight: bold;");
+        button.setMinWidth(120);
+        button.setMinHeight(35);
+        return button;
     }
-
 
     private Button createZoomButton(String text) {
-        Button btn = new Button(text);
-        btn.setStyle("-fx-font-size: 14px; -fx-font-weight: bold; -fx-min-width: 30px; " +
-                "-fx-min-height: 30px; -fx-background-radius: 15px;");
-        return btn;
+        Button button = new Button(text);
+        button.setStyle("-fx-background-color: #7f8c8d; -fx-text-fill: white; -fx-font-weight: bold;");
+        button.setMinWidth(30);
+        button.setMinHeight(30);
+        return button;
     }
-
 
     public BorderPane getView() {
         return root;
