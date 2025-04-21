@@ -1,15 +1,15 @@
-package org.example.fibonaccivisualization.view;
+package view;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import org.example.fibonaccivisualization.model.FibNode;
+import model.FibNode;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
 public class TreePane extends Pane {
     private static final double BASE_H_GAP = 80;
     private static final double V_GAP = 70;
-    private static final double NODE_RADIUS = 20;
+    private static final double NODE_RADIUS = 25;
     private static final double MIN_H_GAP = 30;
 
     private double treeWidth = 800;
@@ -76,6 +76,9 @@ public class TreePane extends Pane {
         view.setLayoutY(y - NODE_RADIUS);
         getChildren().add(view);
         node.view = view;
+
+        // Update the node view with the result
+        view.updateWithResult(node.result);
 
         double childHGap = Math.max(hGap / 1.8, MIN_H_GAP);
         double childY = y + V_GAP;
