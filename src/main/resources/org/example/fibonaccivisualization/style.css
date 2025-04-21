@@ -1,141 +1,50 @@
 .root {
-    -fx-font-family: "Georgia", sans-serif;
-    -fx-background-color: #f5f7fa;
-}
-
-/* Input field styling */
-#inputField {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 15;
-    -fx-background-radius: 15;
-    -fx-padding: 5 10;
+    -fx-font-family: 'Roboto', sans-serif;
     -fx-font-size: 14px;
-    -fx-font-family: "Georgia", sans-serif;
-    -fx-text-fill: #2c3e50;
-}
-
-#inputField:focused {
-    -fx-border-color: #3498db;
-    -fx-background-color: #ecf0f1;
-}
-
-.header {
-    -fx-background-color: linear-gradient(to right, #3498db, #2980b9);
-    -fx-text-fill: white;
-    -fx-padding: 15px;
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 5);
-}
-/* Zoom controls styling */
-.zoom-button {
-    -fx-background-color: #3498db;
-    -fx-text-fill: white;
-    -fx-cursor: hand;
-}
-
-.zoom-button:hover {
-    -fx-background-color: #2980b9;
-}
-
-/* Scroll pane styling */
-.scroll-pane {
-    -fx-background: #ecf0f1;
-    -fx-border-color: #bdc3c7;
-}
-
-.scroll-pane .viewport {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:horizontal, .scroll-bar:vertical {
-    -fx-background-color: transparent;
-}
-
-.scroll-bar:horizontal .thumb,
-.scroll-bar:vertical .thumb {
-    -fx-background-color: #bdc3c7;
-    -fx-background-radius: 5px;
-}
-
-.button {
-    -fx-background-radius: 5;
-    -fx-background-insets: 0;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-    -fx-padding: 8 15;
-    -fx-cursor: hand;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
-    -fx-border-radius: 20px;
-}
-
-.button:hover {
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 3);
 }
 
 .text-area {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
-    -fx-font-family: "Consolas", monospace;
-    -fx-font-size: 14px;
-    -fx-padding: 10px;
-    -fx-text-fill: linear-gradient(to right, #3498db, #2980b9);
-    -fx-font-weight: bold;
+    -fx-font-family: 'Fira Code', monospace;
 }
 
-.chart {
-    -fx-background-color: transparent;
-    -fx-legend-visible: false;
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 3, 0, 0, 0);
 }
 
-.chart-plot-background {
-    -fx-background-color: transparent;
-}
-
-.chart-vertical-grid-lines {
-    -fx-stroke: #ecf0f1;
-}
-
-.chart-horizontal-grid-lines {
-    -fx-stroke: #ecf0f1;
-}
-
-.axis {
-    -fx-tick-label-fill: #7f8c8d;
-    -fx-tick-length: 5;
-    -fx-minor-tick-length: 3;
-}
-
-.status-bar {
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0.7;
     -fx-background-color: #ecf0f1;
-    -fx-border-color: #bdc3c7;
-    -fx-border-width: 1 0 0 0;
-    -fx-padding: 5 10;
-    -fx-font-size: 12px;
-    -fx-text-fill: #7f8c8d;
-}
-
-.tab-pane {
-    -fx-background-color: #ffffff;
-    -fx-border-color: #bdc3c7;
-    -fx-border-radius: 5;
-    -fx-background-radius: 5;
 }
 
 .tab {
-    -fx-background-color: #ecf0f1;
-    -fx-background-radius: 5 5 0 0;
-    -fx-padding: 5 15;
+    -fx-background-color: #bdc3c7;
+    -fx-text-fill: #2c3e50;
 }
 
 .tab:selected {
     -fx-background-color: #3498db;
-    -fx-text-fill: white;
 }
 
-.tab:hover {
-    -fx-background-color: #d6eaf8;
+.tab:selected .tab-label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 2px;
+}
+
+.chart-line-symbol {
+    -fx-background-color: #FFFFFF, #f1c40f;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+#inputField {
+    -fx-border-color: #bdc3c7;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 16px;
 }
