@@ -1,6 +1,6 @@
-package view;
+package org.example.fibonaccivisualization.view;
 
-import controller.FibonacciController;
+import org.example.fibonaccivisualization.controller.FibonacciController;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -62,7 +62,7 @@ public class MainView {
         yAxis.setLabel("F(n)");
         chart = new LineChart<>(xAxis, yAxis);
         chart.setTitle("Fibonacci Sequence Growth");
-        chart.setAnimated(false);
+        chart.setAnimated(true);
         chart.setCreateSymbols(true);
         chart.setLegendVisible(true);
         chart.setStyle("-fx-font-size: 14px;");

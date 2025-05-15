@@ -1,8 +1,8 @@
-package view;
+package org.example.fibonaccivisualization.view;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import model.FibNode;
+import org.example.fibonaccivisualization.model.FibNode;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 
@@ -12,9 +12,9 @@ public class TreePane extends Pane {
     private static final double NODE_RADIUS = 25;
     private static final double MIN_H_GAP = 30;
 
-    private double treeWidth = 800;
+    private double treeWidth = 1532;
     private double treeHeight = 600;
-    private double maxDepth = 0;
+    private double maxDepth = 1.5;
     private double currentScale = 1.0;
     private final Scale scaleTransform = new Scale();
 
@@ -106,8 +106,9 @@ public class TreePane extends Pane {
 
     private void clearTree() {
         getChildren().clear();
-        maxDepth = 0;
-        treeWidth = 800;
+        maxDepth = 1.5;
+        treeWidth = 1532;
         treeHeight = 600;
+        setWidth(treeWidth);
     }
 }

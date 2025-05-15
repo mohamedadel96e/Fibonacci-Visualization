@@ -1,15 +1,15 @@
-package controller;
+package org.example.fibonaccivisualization.controller;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import model.FibNode;
-import model.FibonacciCalculator;
-import view.MemoizationPane;
-import view.TabulationPane;
-import view.TreePane;
+import org.example.fibonaccivisualization.model.FibNode;
+import org.example.fibonaccivisualization.model.FibonacciCalculator;
+import org.example.fibonaccivisualization.view.MemoizationPane;
+import org.example.fibonaccivisualization.view.TabulationPane;
+import org.example.fibonaccivisualization.view.TreePane;
 
 import java.util.List;
 import java.util.Map;

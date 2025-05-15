@@ -1,4 +1,4 @@
-package model;
+package org.example.fibonaccivisualization.model;
 
 import java.util.*;
 

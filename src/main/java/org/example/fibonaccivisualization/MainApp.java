@@ -3,7 +3,7 @@ package org.example.fibonaccivisualization;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import view.MainView;
+import org.example.fibonaccivisualization.view.MainView;
 
 public class MainApp extends Application {
     @Override

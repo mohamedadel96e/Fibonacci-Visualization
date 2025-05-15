@@ -1,4 +1,4 @@
-package view;
+package org.example.fibonaccivisualization.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

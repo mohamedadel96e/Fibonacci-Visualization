@@ -1,4 +1,4 @@
-package view;
+package org.example.fibonaccivisualization.view;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;

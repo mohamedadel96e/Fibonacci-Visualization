@@ -1,4 +1,4 @@
-package view;
+package org.example.fibonaccivisualization.view;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;

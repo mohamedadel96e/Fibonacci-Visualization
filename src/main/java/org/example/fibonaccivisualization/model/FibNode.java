@@ -1,6 +1,6 @@
-package model;
+package org.example.fibonaccivisualization.model;
 
-import view.NodeView;
+import org.example.fibonaccivisualization.view.NodeView;
 
 public class FibNode {
     public int value;
